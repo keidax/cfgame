@@ -9,6 +9,7 @@ import java.util.*;
  */
 public class Connect4Game
 {
+	@SuppressWarnings("unused")
 	private CFGameGrid grid;
 	public Connect4Game(){
 		grid=new CFGameGrid("ConnectFour");

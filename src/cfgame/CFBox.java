@@ -4,11 +4,10 @@ import java.awt.event.*;
 
 @SuppressWarnings("serial")
 public class CFBox extends Canvas {
-	private Color fillColor;
-	private Color currentPlayerColor=null;
+	private Color currentPlayerColor;
 	public CFBox() {
 		super();
-		fillColor=Color.WHITE;
+		currentPlayerColor=Color.WHITE;
 		this.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent arg0) {}
 			public void mousePressed(MouseEvent arg0) {}
@@ -28,11 +27,10 @@ public class CFBox extends Canvas {
 		drawCircle(g);
 		
 	}
-	public void setFillColor(Color c){fillColor=c;}
-	public Color getFillColor(){return fillColor;}
+	public Color getCurrentPlayerColor(){return currentPlayerColor;}
 	public void setCurrentPlayerColor(Color c){currentPlayerColor = c;}
 	private void drawCircle(Graphics g){
-		g.setColor(fillColor);
+		g.setColor(currentPlayerColor);
 		//g.fillOval(3, 3, this.getWidth() - 6, this.getHeight() - 6);
 		int sideLength=Math.min(this.getWidth()-6, this.getHeight()-6);
 		int extraX=this.getWidth()-sideLength;
