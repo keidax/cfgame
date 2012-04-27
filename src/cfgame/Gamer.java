@@ -8,14 +8,14 @@ import java.awt.Color;
  * @author (Clayton Marr) 
  * @version (April 23, 2012)
  */
-public class gamer
+public class Gamer
 {
 	private Color myColor=null;
     private String myName;
     private char mySymbol;
-    public gamer(){  //default
+    public Gamer(){  //default
     	myName=" "; mySymbol='0';   }
-    public gamer(String name, char symbol){
+    public Gamer(String name, char symbol){
     	myName=name; mySymbol=symbol;   }
     public void setName(String newName){
     	myName=newName; }

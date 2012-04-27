@@ -9,13 +9,12 @@ import java.util.*;
  */
 public class Connect4Game
 {
-	@SuppressWarnings("unused")
 	private CFGameGrid grid;
 	public Connect4Game(){
 		grid=new CFGameGrid("ConnectFour");
 	}
     private char[][] gameboard;
-    private gamer[] players;
+    private Gamer[] players;
     public char[][] newBoard()
     {   char[][] board = new char[6][7]; 
         for(int r=0; r<board.length; r++)
@@ -31,6 +30,11 @@ public class Connect4Game
             {   if(board[r][c]=='_')    {   return false;   }   }
         }
         return true;
+    }
+    public boolean isGridFull(){
+    	//TODO implement this to actually check grid and return a value
+    	
+    	return false;
     }
     public int piecesInCol (char[][] board, int c)
     {   int count=0;
@@ -60,7 +64,7 @@ public class Connect4Game
 	public void game()
     {
         gameboard=newBoard();
-        players=new gamer[2]; String nom; char symb, e; int ch, r;
+        players=new Gamer[2]; String nom; char symb, e; int ch, r;
         Scanner kbReader=new Scanner(System.in);
         boolean isOver=false, isTie=false;
         for(int p=1; (p-1)<players.length; p++)
@@ -69,7 +73,7 @@ public class Connect4Game
             System.out.print("Name:\t"); nom=kbReader.nextLine();
             System.out.print("\nSymbol:\t");
             symb=(kbReader.nextLine()).charAt(0);
-            players[p-1]=new gamer(nom,symb);
+            players[p-1]=new Gamer(nom,symb);
         }
         players[0].setColor(Color.CYAN);
         players[1].setColor(Color.ORANGE);
