@@ -44,7 +44,6 @@ public class CFColumn extends Panel {
 		for(CFBox box:column){
 			
 			if(column.indexOf(box)==column.size()-1){
-				column.get(column.size()-2).returnToEmpty();
 				box.addPiece(g);
 				return true;
 			}
@@ -52,11 +51,10 @@ public class CFColumn extends Panel {
 				return false;
 			}
 			else if(column.get(column.indexOf(box)+1).isEmpty()){
-				if(column.indexOf(box)>=1){
-					column.get(column.indexOf(box)-1).returnToEmpty();
-				}
 				box.setCurrentPlayerColor(g.getColor());
-				update(getGraphics());
+				wait(100);
+				box.returnToEmpty();
+				wait(50);
 				continue;
 			}
 			else{
@@ -65,5 +63,12 @@ public class CFColumn extends Panel {
 			}
 		}
 		return false;
+	}
+	private void wait(int millis){
+		long timeEnd, timeStart;
+		timeStart=timeEnd=System.currentTimeMillis();
+		while(timeEnd-timeStart<millis){
+			timeEnd=System.currentTimeMillis();
+		}
 	}
 }

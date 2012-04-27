@@ -32,8 +32,14 @@ public class CFBox extends Canvas {
 		
 	}
 	public Color getCurrentPlayerColor(){return currentPlayerColor;}
-	public void setCurrentPlayerColor(Color c){currentPlayerColor = c;}
-	public void returnToEmpty(){currentPlayerColor = Color.WHITE;}
+	public void setCurrentPlayerColor(Color c){
+		currentPlayerColor = c;
+		update(getGraphics());
+	}
+	public void returnToEmpty(){
+		currentPlayerColor = Color.WHITE;
+		update(getGraphics());
+	}
 	private void drawCircle(Graphics g){
 		g.setColor(currentPlayerColor);
 		//g.fillOval(3, 3, this.getWidth() - 6, this.getHeight() - 6);
