@@ -69,6 +69,8 @@ public class Connect4Game
         players=new Gamer[2]; String nom; char symb, e; int ch, r;
         Scanner kbReader=new Scanner(System.in);
         boolean isOver=false, isTie=false;
+        
+        /*
         for(int p=1; (p-1)<players.length; p++)
         {
             System.out.println("Please enter Player#"+p);
@@ -77,7 +79,10 @@ public class Connect4Game
             symb=(kbReader.nextLine()).charAt(0);
             players[p-1]=new Gamer(nom,symb);
         }
+        */
+        players[0]=new Gamer("player",'p');
         players[0].setColor(Color.CYAN);
+        players[1]=new Gamer("comp",'c');
         players[1].setColor(Color.ORANGE);
         for(int p=0; !isOver; p=1-p)
         {

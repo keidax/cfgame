@@ -52,9 +52,8 @@ public class CFColumn extends Panel {
 			}
 			else if(column.get(column.indexOf(box)+1).isEmpty()){
 				box.setCurrentPlayerColor(g.getColor());
-				wait(100);
+				wait(300);
 				box.returnToEmpty();
-				wait(50);
 				continue;
 			}
 			else{
