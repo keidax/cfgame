@@ -12,9 +12,11 @@ public class Connect4Game
 	private CFGameGrid grid;
 	public Connect4Game(){
 		grid=new CFGameGrid("ConnectFour");
+		game();
 	}
     private char[][] gameboard;
     private Gamer[] players;
+    private static Gamer currentGamer;
     public char[][] newBoard()
     {   char[][] board = new char[6][7]; 
         for(int r=0; r<board.length; r++)
@@ -79,6 +81,7 @@ public class Connect4Game
         players[1].setColor(Color.ORANGE);
         for(int p=0; !isOver; p=1-p)
         {
+        	currentGamer=players[p];
             symb=players[p].getSymbol();
             System.out.println(players[p].getName()+"'s turn:");
             System.out.println("The current rack:");
@@ -145,5 +148,8 @@ public class Connect4Game
             }
             System.out.println("");
         }
+    }
+    public static Gamer getCurrentGamer(){
+    	return currentGamer;
     }
 }

@@ -11,7 +11,9 @@ public class CFBox extends Canvas {
 		currentPlayerColor=Color.WHITE;
 		isOccupied=false;
 		this.addMouseListener(new MouseListener() {
-			public void mouseClicked(MouseEvent arg0) {}
+			public void mouseClicked(MouseEvent arg0) {
+				((CFColumn) getParent()).addPiece(Connect4Game.getCurrentGamer());
+			}
 			public void mousePressed(MouseEvent arg0) {}
 			public void mouseReleased(MouseEvent arg0) {}
 			public void mouseEntered(MouseEvent arg0) {
@@ -46,5 +48,6 @@ public class CFBox extends Canvas {
 	public void addPiece(Gamer g){
 		setCurrentPlayerColor(g.getColor());
 		isOccupied=true;
+		update(getGraphics());
 	}
 }
