@@ -84,8 +84,17 @@ public class Connect4Game
         players[0].setColor(Color.CYAN);
         players[1]=new Gamer("comp",'c');
         players[1].setColor(Color.ORANGE);
-        for(int p=0; !isOver; p=1-p)
+        for(int p=0; !grid.isGameOver(); p=1-p)
         {
+        	grid.changePlayer(players[p]);
+        	System.out.println("players changed");
+        	while(!grid.isRoundOver()){
+        		
+        		System.out.println(System.currentTimeMillis());
+        		continue;
+        	}
+        	System.out.println("turn over");
+        	/*
         	currentGamer=players[p];
             symb=players[p].getSymbol();
             System.out.println(players[p].getName()+"'s turn:");
@@ -107,7 +116,9 @@ public class Connect4Game
                 isOver=true;
             }
             if(isFull(gameboard))
-            {   System.out.println("IT'S A TIE!!"); isOver=true;    }            
+            {   System.out.println("IT'S A TIE!!"); isOver=true;    }     
+            */
+        	
         }
     }
     public boolean isVictory(char[][] board, /*int row, int column,*/ char sym)
@@ -153,8 +164,5 @@ public class Connect4Game
             }
             System.out.println("");
         }
-    }
-    public static Gamer getCurrentGamer(){
-    	return currentGamer;
     }
 }

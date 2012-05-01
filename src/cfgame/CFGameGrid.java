@@ -7,6 +7,8 @@ import java.util.*;
 @SuppressWarnings("serial")
 public class CFGameGrid extends Frame implements WindowListener {
 	private ArrayList<CFColumn> columns=new ArrayList<CFColumn>();
+	Gamer currentPlayer=null;
+	boolean currentTurnOver=false;
 	public CFGameGrid(String title) {
 		super(title);
 		for(int i=0; i<6;i++){
@@ -26,15 +28,31 @@ public class CFGameGrid extends Frame implements WindowListener {
 		setSize(400, 400);
 		setVisible(true);
 	}
-	public void setCurrentPlayerColor(Color c){
+	public void setCurrentPlayer(Gamer player){
 		for(CFColumn col:columns){
-			col.setCurrentPlayerColor(c);
+			col.setCurrentPlayer(player);
 		}
 	}
 	public void windowClosing(WindowEvent e) {
 		setVisible(false);
 		dispose();
 		System.exit(0);
+	}
+	public boolean isRoundOver(){
+		return currentTurnOver;
+	}
+	public boolean isGameOver(){
+		//TODO: Implement this to check the gameboard and determine if the game has been won/tied
+		return false;
+	}
+	public void changePlayer(Gamer player){
+		currentTurnOver=false;
+		currentPlayer=player;
+		setCurrentPlayer(currentPlayer);
+	}
+	public void endCurrentTurn(){
+		System.out.println("gamegrid turn ended");
+		currentTurnOver=true;
 	}
 	public void windowClosed(WindowEvent e) {}
 	public void windowDeactivated(WindowEvent e) {}

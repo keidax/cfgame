@@ -4,15 +4,18 @@ import java.awt.event.*;
 
 @SuppressWarnings("serial")
 public class CFBox extends Canvas {
-	private Color currentPlayerColor;
+	private Gamer currentPlayer;
 	private boolean isOccupied;
 	public CFBox() {
 		super();
-		currentPlayerColor=Color.WHITE;
 		isOccupied=false;
 		this.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent arg0) {
-				((CFColumn) getParent()).addPiece(Connect4Game.getCurrentGamer());
+				if(((CFColumn) getParent()).addPiece(currentPlayer)){
+					System.out.println("cfbox ending turn");
+					((CFGameGrid) getParent().getParent()).endCurrentTurn();
+				}
+				
 			}
 			public void mousePressed(MouseEvent arg0) {}
 			public void mouseReleased(MouseEvent arg0) {}
@@ -31,17 +34,16 @@ public class CFBox extends Canvas {
 		drawCircle(g);
 		
 	}
-	public Color getCurrentPlayerColor(){return currentPlayerColor;}
-	public void setCurrentPlayerColor(Color c){
-		currentPlayerColor = c;
-		update(getGraphics());
-	}
 	public void returnToEmpty(){
-		currentPlayerColor = Color.WHITE;
+		isOccupied=false;
 		update(getGraphics());
 	}
 	private void drawCircle(Graphics g){
-		g.setColor(currentPlayerColor);
+		if(isOccupied){
+			g.setColor(currentPlayer.getColor());
+		}else{
+			g.setColor(Color.WHITE);
+		}
 		//g.fillOval(3, 3, this.getWidth() - 6, this.getHeight() - 6);
 		int sideLength=Math.min(this.getWidth()-6, this.getHeight()-6);
 		int extraX=this.getWidth()-sideLength;
@@ -51,9 +53,14 @@ public class CFBox extends Canvas {
 	public boolean isEmpty(){
 		return !isOccupied;
 	}
-	public void addPiece(Gamer g){
-		setCurrentPlayerColor(g.getColor());
+	public void addPiece(Gamer player){
 		isOccupied=true;
 		update(getGraphics());
+	}
+	public void setCurrentPlayer(Gamer player){
+		if(isOccupied){
+			return;
+		}
+		currentPlayer=player;
 	}
 }

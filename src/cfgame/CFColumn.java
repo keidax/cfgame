@@ -35,29 +35,29 @@ public class CFColumn extends Panel {
 			box.setBackground(c);
 		}
 	}
-	public void setCurrentPlayerColor(Color c){
+	public void setCurrentPlayer(Gamer player){
 		for(CFBox box:column){
-			box.setCurrentPlayerColor(c);
+			box.setCurrentPlayer(player);
 		}
 	}
-	public boolean addPiece(Gamer g){
+	public boolean addPiece(Gamer player){
 		for(CFBox box:column){
 			
-			if(column.indexOf(box)==column.size()-1){
-				box.addPiece(g);
+			if(column.indexOf(box)==column.size()-1){//box is at bottom of column
+				box.addPiece(player);
 				return true;
 			}
-			else if(column.indexOf(box)==0 && !box.isEmpty()){
+			else if(column.indexOf(box)==0 && !box.isEmpty()){//column is already full
 				return false;
 			}
-			else if(column.get(column.indexOf(box)+1).isEmpty()){
-				box.setCurrentPlayerColor(g.getColor());
+			else if(column.get(column.indexOf(box)+1).isEmpty()){//box below current box is empty
+				box.addPiece(player);
 				wait(300);
 				box.returnToEmpty();
 				continue;
 			}
 			else{
-				box.addPiece(g);
+				box.addPiece(player);
 				return true;
 			}
 		}
