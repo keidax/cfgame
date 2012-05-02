@@ -4,7 +4,7 @@ import java.awt.event.*;
 import java.util.*;
 
 @SuppressWarnings("serial")
-public class CFColumn extends Panel {
+public class CFColumn extends Panel implements Runnable{
 	private ArrayList<CFBox> column;
 
 	public CFColumn(ArrayList<CFBox> c) {
@@ -40,34 +40,32 @@ public class CFColumn extends Panel {
 			box.setCurrentPlayer(player);
 		}
 	}
-	public boolean addPiece(Gamer player){
+	public void addPiece()
+	throws InterruptedException{
 		for(CFBox box:column){
 			
 			if(column.indexOf(box)==column.size()-1){//box is at bottom of column
-				box.addPiece(player);
-				return true;
+				box.addPiece();
+				((CFGameGrid) getParent()).endCurrentRound();
 			}
 			else if(column.indexOf(box)==0 && !box.isEmpty()){//column is already full
-				return false;
+				continue;
 			}
 			else if(column.get(column.indexOf(box)+1).isEmpty()){//box below current box is empty
-				box.addPiece(player);
-				wait(300);
+				box.addPiece();
+				Thread.sleep(200);
 				box.returnToEmpty();
 				continue;
 			}
 			else{
-				box.addPiece(player);
-				return true;
+				box.addPiece();
+				((CFGameGrid) getParent()).endCurrentRound();
 			}
 		}
-		return false;
 	}
-	private void wait(int millis){
-		long timeEnd, timeStart;
-		timeStart=timeEnd=System.currentTimeMillis();
-		while(timeEnd-timeStart<millis){
-			timeEnd=System.currentTimeMillis();
-		}
+	public void run() {
+		// TODO Auto-generated method stub
+		
 	}
+	
 }

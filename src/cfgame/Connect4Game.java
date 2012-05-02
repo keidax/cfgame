@@ -16,7 +16,6 @@ public class Connect4Game
 	}
     private char[][] gameboard;
     private Gamer[] players;
-    private static Gamer currentGamer;
     public char[][] newBoard()
     {   char[][] board = new char[6][7]; 
         for(int r=0; r<board.length; r++)
@@ -32,11 +31,6 @@ public class Connect4Game
             {   if(board[r][c]=='_')    {   return false;   }   }
         }
         return true;
-    }
-    public boolean isGridFull(){
-    	//TODO implement this to actually check grid and return a value
-    	
-    	return false;
     }
     public int piecesInCol (char[][] board, int c)
     {   int count=0;
@@ -63,7 +57,7 @@ public class Connect4Game
     }*/
     
     @SuppressWarnings("unused")
-	public void game()
+	public synchronized void game()
     {
         gameboard=newBoard();
         players=new Gamer[2]; String nom; char symb, e; int ch, r;
@@ -89,9 +83,10 @@ public class Connect4Game
         	grid.changePlayer(players[p]);
         	System.out.println("players changed");
         	while(!grid.isRoundOver()){
-        		
-        		System.out.println(System.currentTimeMillis());
-        		continue;
+        		try {
+                    wait();
+                } catch (InterruptedException e2) {}
+
         	}
         	System.out.println("turn over");
         	/*

@@ -11,9 +11,12 @@ public class CFBox extends Canvas {
 		isOccupied=false;
 		this.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent arg0) {
-				if(((CFColumn) getParent()).addPiece(currentPlayer)){
-					System.out.println("cfbox ending turn");
-					((CFGameGrid) getParent().getParent()).endCurrentTurn();
+				try {
+					((CFColumn) getParent()).addPiece();
+					
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 				
 			}
@@ -53,7 +56,7 @@ public class CFBox extends Canvas {
 	public boolean isEmpty(){
 		return !isOccupied;
 	}
-	public void addPiece(Gamer player){
+	public void addPiece(){
 		isOccupied=true;
 		update(getGraphics());
 	}
