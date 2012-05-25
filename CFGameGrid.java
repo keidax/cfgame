@@ -1,4 +1,3 @@
-package cfgame;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -9,23 +8,24 @@ public class CFGameGrid extends Frame implements WindowListener {
     Gamer currentPlayer=null;
     boolean currentTurnOver=false;
     private Gamer[] players=new Gamer[2];
-    public CFGameGrid(String title) {
+    public CFGameGrid(String title, int numRows, int numColumns) {
         super(title);
-        for(int i=0; i<6;i++){
+        for(int i=0; i<numColumns;i++){
             ArrayList<CFBox> tempList=new ArrayList<CFBox>();
-            for(int j=0; j<7;j++){
+            for(int j=0; j<numRows;j++){
                 tempList.add(new CFBox());
             }
-            CFColumn temp=new CFColumn(tempList);
+            CFColumn temp=new CFColumn(tempList, numRows);
             columns.add(temp);
-            temp.setBackground(Color.BLACK);
+            temp.setBackground(Color.GREEN);
         }
-        setLayout(new GridLayout(1,6,0,0));
+        setLayout(new GridLayout(1,numColumns,0,0));
         addWindowListener(this);
         Iterator<CFColumn> iter=columns.iterator();
         while(iter.hasNext()){
             add(iter.next());
         }
+        setBackground(Color.GREEN);
         setSize(400, 400);
         setVisible(true);
     }
@@ -66,7 +66,10 @@ public class CFGameGrid extends Frame implements WindowListener {
         {
             System.out.println(players[VictorNum()].getName()+" WINS!!!");
         }
-        
+        for(int i=0; i<columns.size(); i++) 
+        {   
+            columns.get(i).endGame();
+        }
     }
 
     public void setCurrentPlayer(Gamer player){

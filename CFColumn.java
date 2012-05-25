@@ -1,15 +1,15 @@
-package cfgame;
+ 
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
 @SuppressWarnings("serial")
 public class CFColumn extends Panel implements Runnable{
-    private ArrayList<CFBox> column;
+    private ArrayList<CFBox> column; private boolean gameOver=false; 
     Gamer cPlayer;
-    public CFColumn(ArrayList<CFBox> c) {
+    public CFColumn(ArrayList<CFBox> c, int numRows) {
         super();
-        setLayout(new GridLayout(7, 1));
+        setLayout(new GridLayout(numRows, 1));
         column = c;
         Iterator<CFBox> iter = column.iterator();
         while (iter.hasNext()) {
@@ -48,7 +48,11 @@ public class CFColumn extends Panel implements Runnable{
         for(int i=0; i<column.size(); i++)
         {
             CFBox box=column.get(i);
-            if(i==column.size()-1)
+            if (gameOver)
+            {
+                continue;
+            }
+            else if(i==column.size()-1)
             {   //box is at bottom of column- piece rests here.
                 box.addPiece(); box.setOwner(box.getCurrentPlayer());
                 ((CFGameGrid)getParent()).endCurrentRound(); break;
@@ -99,4 +103,6 @@ public class CFColumn extends Panel implements Runnable{
     public int height() {   return column.size();   }
     public CFBox get (int slot)
     {   return column.get(slot);   }
+    public void endGame()
+    {   gameOver=true;  }
 }

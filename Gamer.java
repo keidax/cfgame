@@ -1,4 +1,4 @@
-package cfgame;
+ 
 import java.awt.Color;
 
 
