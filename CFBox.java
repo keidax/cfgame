@@ -36,11 +36,7 @@ public class CFBox extends Canvas {
 
     public void paint(Graphics g) {
         drawCircle(g);
-        
     }
-    //This is a test! Editing within GitHub!
-    //int testInt =0;
-    //testInt++;
     public void returnToEmpty(){
         isOccupied=false;
         update(getGraphics());

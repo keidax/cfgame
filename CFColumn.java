@@ -13,7 +13,8 @@ public class CFColumn extends Panel implements Runnable{
         column = c;
         Iterator<CFBox> iter = column.iterator();
         while (iter.hasNext()) {
-            this.add(iter.next());
+        	CFBox tempBox=iter.next();
+            this.add(tempBox);
         }
         this.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent arg0) {}

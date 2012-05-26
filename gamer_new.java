@@ -1,4 +1,4 @@
-package cfgame;
+
 /**
  * Write a description of class gamer here.
  * 

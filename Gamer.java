@@ -1,10 +1,7 @@
- 
 import java.awt.Color;
 
 
 /**
- * Write a description of class gamer here.
- * 
  * @author (Clayton Marr) 
  * @version (April 23, 2012)
  */

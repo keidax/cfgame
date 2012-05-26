@@ -10,6 +10,7 @@ public class CFGameGrid extends Frame implements WindowListener {
     private Gamer[] players=new Gamer[2];
     public CFGameGrid(String title, int numRows, int numColumns) {
         super(title);
+        setBackground(Color.BLUE);
         for(int i=0; i<numColumns;i++){
             ArrayList<CFBox> tempList=new ArrayList<CFBox>();
             for(int j=0; j<numRows;j++){
@@ -25,13 +26,13 @@ public class CFGameGrid extends Frame implements WindowListener {
         while(iter.hasNext()){
             add(iter.next());
         }
-        setBackground(Color.GREEN);
         setSize(400, 400);
         setVisible(true);
     }
     
-    public synchronized void game()
+    public  void game()
     {
+    	update(getGraphics());
         String nom;
         Scanner kbReader=new Scanner(System.in);
         for(int p=1; (p-1)<players.length; p++)

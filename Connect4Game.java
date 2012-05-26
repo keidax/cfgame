@@ -1,4 +1,4 @@
-package cfgame;
+
 import java.awt.Color;
 import java.util.*;
 /**
@@ -11,7 +11,7 @@ public class Connect4Game
 {
 	private CFGameGrid grid;
 	public Connect4Game(){
-		grid=new CFGameGrid("ConnectFour");
+		grid=new CFGameGrid("ConnectFour", 3, 3);
 		game();
 	}
     private char[][] gameboard;

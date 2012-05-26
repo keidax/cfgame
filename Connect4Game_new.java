@@ -1,4 +1,4 @@
-package cfgame;
+
 import java.util.Scanner;
 /**
  * Write a description of class Connect4Game here.
