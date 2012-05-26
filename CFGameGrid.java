@@ -28,22 +28,12 @@ public class CFGameGrid extends Frame implements WindowListener {
         }
         setSize(400, 400);
         setVisible(true);
+        getPlayerInfo();
     }
     
-    public  void game()
+    public synchronized void game()
     {
     	update(getGraphics());
-        String nom;
-        Scanner kbReader=new Scanner(System.in);
-        for(int p=1; (p-1)<players.length; p++)
-        {
-            System.out.println("Please enter Player #"+p+":");
-            System.out.print("Name:\t"); nom=kbReader.nextLine();
-            //perhaps have a method by which players choose their colors. 
-            players[p-1]=new Gamer(nom);
-        }
-        players[0].setColor(Color.CYAN);
-        players[1].setColor(Color.ORANGE);
         for(int p=0; !isGameOver(); p=1-p)
         {
             changePlayerTo(players[p]);
@@ -72,7 +62,24 @@ public class CFGameGrid extends Frame implements WindowListener {
             columns.get(i).endGame();
         }
     }
-
+    private void getPlayerInfo(){
+    	/*
+    	String nom;
+        Scanner kbReader=new Scanner(System.in);
+        for(int p=1; (p-1)<players.length; p++)
+        {
+            System.out.println("Please enter Player #"+p+":");
+            System.out.print("Name:\t"); nom=kbReader.nextLine();
+            //perhaps have a method by which players choose their colors. 
+            players[p-1]=new Gamer(nom);
+        }
+    	 */
+    	Container inputHolder=new Container();
+    	//inputHolder.add(new TextComponent("Player 1"));
+        CFPopup inputWindow = new CFPopup(this);
+        players[0].setColor(Color.CYAN);
+        players[1].setColor(Color.ORANGE);
+    }
     public void setCurrentPlayer(Gamer player){
         for(CFColumn col:columns)
         {
