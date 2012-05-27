@@ -1,4 +1,3 @@
- 
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -45,8 +44,7 @@ public class CFColumn extends Panel implements Runnable{
     }
     public void addPiece()
     throws InterruptedException
-    {   
-        CFBox lastBox; 
+    {
         for(int i=0; i<column.size(); i++)
         {
             CFBox box=column.get(i);

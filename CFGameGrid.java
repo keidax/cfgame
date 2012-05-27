@@ -55,7 +55,8 @@ public class CFGameGrid extends Frame implements WindowListener {
             columns.get(i).endGame();
         }
     }
-    private void getPlayerInfo(){
+    @SuppressWarnings("unused")
+	private void getPlayerInfo(){
     	/*
     	String nom;
         Scanner kbReader=new Scanner(System.in);
@@ -67,7 +68,7 @@ public class CFGameGrid extends Frame implements WindowListener {
             players[p-1]=new Gamer(nom);
         }
     	 */
-    	Container inputHolder=new Container();
+		Container inputHolder=new Container();
     	//inputHolder.add(new TextComponent("Player 1"));
         CFPopup inputWindow = new CFPopup(this);
         players[0].setColor(Color.CYAN);
@@ -97,7 +98,6 @@ public class CFGameGrid extends Frame implements WindowListener {
         for(pn=0; pn<=1; pn++) 
         {
             Gamer inQ=players[pn];
-            Color hue=players[pn].getColor(); //might need to use color, since Gamer class isn't necessarily comparable
             int c,r,count = 0;
             for(c=0; c<columns.size(); c++) //test for vertical victory
             {
