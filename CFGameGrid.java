@@ -8,24 +8,17 @@ public class CFGameGrid extends Frame implements WindowListener {
     Gamer currentPlayer=null;
     boolean currentTurnOver=false;
     private Gamer[] players=new Gamer[2];
+    Color backgroundColor=Color.BLUE;
     public CFGameGrid(String title, int numRows, int numColumns) {
         super(title);
-        setBackground(Color.BLUE);
-        for(int i=0; i<numColumns;i++){
-            ArrayList<CFBox> tempList=new ArrayList<CFBox>();
-            for(int j=0; j<numRows;j++){
-                tempList.add(new CFBox());
-            }
-            CFColumn temp=new CFColumn(tempList, numRows);
-            columns.add(temp);
-            temp.setBackground(Color.GREEN);
-        }
+        setBackground(backgroundColor);
         setLayout(new GridLayout(1,numColumns,0,0));
-        addWindowListener(this);
-        Iterator<CFColumn> iter=columns.iterator();
-        while(iter.hasNext()){
-            add(iter.next());
+        for(int i=0; i<numColumns;i++){
+        	CFColumn tempColumn=new CFColumn(numRows, backgroundColor);
+            columns.add(tempColumn);
+            this.add(tempColumn);
         }
+        addWindowListener(this);
         setSize(400, 400);
         setVisible(true);
         getPlayerInfo();

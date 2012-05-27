@@ -6,9 +6,11 @@ import java.awt.event.*;
 public class CFBox extends Canvas {
     private Gamer currentPlayer;
     private boolean isOccupied;
-    private Gamer owner; 
-    public CFBox() {
+    private Gamer owner;
+    Color backgroundColor;
+    public CFBox(Color bc) {
         super();
+        backgroundColor=bc;
         isOccupied=false;
         this.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent arg0) {
@@ -24,12 +26,10 @@ public class CFBox extends Canvas {
             public void mousePressed(MouseEvent arg0) {}
             public void mouseReleased(MouseEvent arg0) {}
             public void mouseEntered(MouseEvent arg0) {
-                Color notificationColor=getBackground().darker();
-                getParent().setBackground(notificationColor);
+                getParent().setBackground(backgroundColor.darker());
             }
             public void mouseExited(MouseEvent arg0) {
-                Color restoreColor=getParent().getParent().getBackground();
-                getParent().setBackground(restoreColor);
+                getParent().setBackground(backgroundColor.brighter());
             }
         });
     }

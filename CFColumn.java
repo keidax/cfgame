@@ -5,16 +5,17 @@ import java.util.*;
 
 @SuppressWarnings("serial")
 public class CFColumn extends Panel implements Runnable{
-    private ArrayList<CFBox> column; private boolean gameOver=false; 
+    private ArrayList<CFBox> column=new ArrayList<CFBox>(); private boolean gameOver=false;
+    Color backgroundColor;
     Gamer cPlayer;
-    public CFColumn(ArrayList<CFBox> c, int numRows) {
+    public CFColumn(int numRows, Color bc) {
         super();
+        backgroundColor=bc;
         setLayout(new GridLayout(numRows, 1));
-        column = c;
-        Iterator<CFBox> iter = column.iterator();
-        while (iter.hasNext()) {
-        	CFBox tempBox=iter.next();
-            this.add(tempBox);
+        for(int i=0; i<numRows;i++){
+        	CFBox tempBox=new CFBox(backgroundColor);
+        	column.add(tempBox);
+        	this.add(tempBox);
         }
         this.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent arg0) {}
