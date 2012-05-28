@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class CFColumn extends Panel implements Runnable{
@@ -63,7 +64,7 @@ public class CFColumn extends Panel implements Runnable{
             }
             else if(column.get(i+1).isEmpty()){//box below current box is empty
                 box.addPiece();
-                Thread.sleep(200);
+                Thread.sleep(50);
                 box.returnToEmpty();
                 continue;
             }
@@ -106,8 +107,8 @@ public class CFColumn extends Panel implements Runnable{
     public void endGame()
     {   gameOver=true;  }
     public boolean isFull(){
-    	for(CFBox box:(CFBox[])this.getComponents()){
-    		if(box.isEmpty())
+    	for(Component box:this.getComponents()){
+    		if(((CFBox) box).isEmpty())
             {   
                 return false;
             }

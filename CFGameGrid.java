@@ -22,10 +22,12 @@ public class CFGameGrid extends Frame implements WindowListener {
         setSize(400, 400);
         setVisible(true);
         getPlayerInfo();
+        game();
     }
     
     public synchronized void game()
     {
+    	System.out.println("Game STARTED!!!");
     	update(getGraphics());
         for(int p=0; !isGameOver(); p=1-p)
         {
@@ -57,7 +59,7 @@ public class CFGameGrid extends Frame implements WindowListener {
     }
     @SuppressWarnings("unused")
 	private void getPlayerInfo(){
-    	/*
+    	
     	String nom;
         Scanner kbReader=new Scanner(System.in);
         for(int p=1; (p-1)<players.length; p++)
@@ -67,12 +69,13 @@ public class CFGameGrid extends Frame implements WindowListener {
             //perhaps have a method by which players choose their colors. 
             players[p-1]=new Gamer(nom);
         }
-    	 */
+    	 
 		Container inputHolder=new Container();
     	//inputHolder.add(new TextComponent("Player 1"));
-        CFPopup inputWindow = new CFPopup(this);
+        //CFPopup inputWindow = new CFPopup(this);
         players[0].setColor(Color.CYAN);
         players[1].setColor(Color.ORANGE);
+        System.out.println("Player colors set");
     }
     public void setCurrentPlayer(Gamer player){
         for(int i=0; i<this.getComponentCount(); i++)
@@ -260,12 +263,14 @@ public class CFGameGrid extends Frame implements WindowListener {
         return -1;
     }
     public boolean isGridFull(){
-        for(CFColumn column:(CFColumn[])this.getComponents())
+        for(Component column:this.getComponents())
         {
-        	if(!column.isFull()){
+        	if(!((CFColumn) column).isFull()){
+        		System.out.println("Grid not full.");
         		return false;
         	}
         }
+        System.out.println("Grid full!");
         return true;
     }
     public void changePlayerTo(Gamer player){
