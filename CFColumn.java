@@ -18,13 +18,13 @@ public class CFColumn extends Panel implements MouseListener{
     }
     public void setBackground(Color c){
         super.setBackground(c);
-        for(int i=0; i<this.getComponentCount(); i++){
-            this.getComponent(i).setBackground(c);
+        for(int i=0; i<getComponentCount(); i++){
+            getComponent(i).setBackground(c);
         }
     }
     public void setCurrentPlayer(Gamer player){
-    	for(int i=0; i<this.getComponentCount(); i++){
-    		((CFBox) this.getComponent(i)).setCurrentPlayer(player);
+    	for(int i=0; i<getComponentCount(); i++){
+    		getComponent(i).setCurrentPlayer(player);
         }
         cPlayer=player; 
     }
@@ -33,7 +33,7 @@ public class CFColumn extends Panel implements MouseListener{
     {
         for(int i=0; i<this.getComponentCount(); i++)
         {
-            CFBox box=(CFBox) this.getComponent(i);
+            CFBox box=getComponent(i);
             if (gameOver)
             {
                 continue;
@@ -47,7 +47,7 @@ public class CFColumn extends Panel implements MouseListener{
             {
                 continue;
             }
-            else if(((CFBox) getComponent(i+1)).isEmpty()){//box below current box is empty
+            else if(getComponent(i+1).isEmpty()){//box below current box is empty
                 box.addPiece();
                 Thread.sleep(50);
                 box.returnToEmpty();
@@ -59,37 +59,15 @@ public class CFColumn extends Panel implements MouseListener{
                 ((CFGameGrid) getParent()).endCurrentRound(); break;
             }
         }
-        /*
-        for(CFBox box:column)
-        {            
-            if(column.indexOf(box)==column.size()-1){//box is at bottom of column
-                box.addPiece();
-                ((CFGameGrid) getParent()).endCurrentRound();
-            }
-            else if(column.indexOf(box)==0 && !box.isEmpty()){//column is already full
-                continue;
-            }
-            else if(column.get(column.indexOf(box)+1).isEmpty()){//box below current box is empty
-                box.addPiece();
-                Thread.sleep(200);
-                box.returnToEmpty();
-                continue;
-            }
-            else{
-                box.addPiece();
-                ((CFGameGrid) getParent()).endCurrentRound();
-            }
-        }*/
-        //lastBox.setOwner(cPlayer); 
     }
     public int height() {   return getComponentCount();   }
     public CFBox get (int slot)
-    {   return (CFBox) getComponent(slot);   }
+    {   return getComponent(slot);   }
     public void endGame()
     {   gameOver=true;  }
     public boolean isFull(){
-    	for(Component box:this.getComponents()){
-    		if(((CFBox) box).isEmpty())
+    	for(CFBox box:getComponents()){
+    		if(box.isEmpty())
             {   
                 return false;
             }
@@ -106,5 +84,15 @@ public class CFColumn extends Panel implements MouseListener{
 	public void mouseEntered(MouseEvent arg0) {
 		Color notificationColor=getBackground().darker();
         setBackground(notificationColor);
+	}
+	public CFBox getComponent(int num){
+		return (CFBox) this.getComponent(num);
+	}
+	public CFBox[] getComponents(){
+		CFBox[] boxArray=new CFBox[getComponentCount()];
+		for(int i=0; i<getComponentCount(); i++){
+			boxArray[i]=getComponent(i);
+		}
+		return boxArray;
 	}
 }

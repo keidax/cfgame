@@ -54,7 +54,7 @@ public class CFGameGrid extends Frame implements WindowListener {
         }
         for(int i=0; i<this.getComponentCount(); i++) 
         {   
-            ((CFColumn) this.getComponent(i)).endGame();
+            getComponent(i).endGame();
         }
     }
     @SuppressWarnings("unused")
@@ -78,9 +78,9 @@ public class CFGameGrid extends Frame implements WindowListener {
         System.out.println("Player colors set");
     }
     public void setCurrentPlayer(Gamer player){
-        for(int i=0; i<this.getComponentCount(); i++)
+        for(int i=0; i<getComponentCount(); i++)
         {
-            ((CFColumn)this.getComponent(i)).setCurrentPlayer(player);
+            getComponent(i).setCurrentPlayer(player);
         }
     }
     
@@ -263,9 +263,9 @@ public class CFGameGrid extends Frame implements WindowListener {
         return -1;
     }
     public boolean isGridFull(){
-        for(Component column:this.getComponents())
+        for(CFColumn column:getComponents())
         {
-        	if(!((CFColumn) column).isFull()){
+        	if(!column.isFull()){
         		System.out.println("Grid not full.");
         		return false;
         	}
@@ -283,6 +283,16 @@ public class CFGameGrid extends Frame implements WindowListener {
         currentTurnOver=true;
         notifyAll();
     }
+    public CFColumn getComponent(int num){
+		return (CFColumn) this.getComponent(num);
+	}
+    public CFColumn[] getComponents(){
+		CFColumn[] colArray=new CFColumn[getComponentCount()];
+		for(int i=0; i<getComponentCount(); i++){
+			colArray[i]=getComponent(i);
+		}
+		return colArray;
+	}
     public void windowClosing(WindowEvent e) {
         setVisible(false);
         dispose();
