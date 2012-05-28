@@ -1,6 +1,9 @@
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
+import java.awt.Color;
+import java.awt.Frame;
+import java.awt.GridLayout;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.util.ArrayList;
 
 @SuppressWarnings("serial")
 public class CFGameGrid extends Frame implements WindowListener {
