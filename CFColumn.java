@@ -24,7 +24,7 @@ public class CFColumn extends Panel implements MouseListener{
     }
     public void setCurrentPlayer(Gamer player){
     	for(int i=0; i<getComponentCount(); i++){
-    		getComponent(i).setCurrentPlayer(player);
+    		((CFBox) getComponent(i)).setCurrentPlayer(player);
         }
         cPlayer=player; 
     }
@@ -33,7 +33,7 @@ public class CFColumn extends Panel implements MouseListener{
     {
         for(int i=0; i<this.getComponentCount(); i++)
         {
-            CFBox box=getComponent(i);
+            CFBox box=(CFBox) getComponent(i);
             if (gameOver)
             {
                 continue;
@@ -47,7 +47,7 @@ public class CFColumn extends Panel implements MouseListener{
             {
                 continue;
             }
-            else if(getComponent(i+1).isEmpty()){//box below current box is empty
+            else if(((CFBox) getComponent(i+1)).isEmpty()){//box below current box is empty
                 box.addPiece();
                 Thread.sleep(50);
                 box.returnToEmpty();
@@ -62,7 +62,7 @@ public class CFColumn extends Panel implements MouseListener{
     }
     public int height() {   return getComponentCount();   }
     public CFBox get (int slot)
-    {   return getComponent(slot);   }
+    {   return (CFBox) getComponent(slot);   }
     public void endGame()
     {   gameOver=true;  }
     public boolean isFull(){
@@ -85,13 +85,13 @@ public class CFColumn extends Panel implements MouseListener{
 		Color notificationColor=getBackground().darker();
         setBackground(notificationColor);
 	}
-	public CFBox getComponent(int num){
+	/*public CFBox getComponent(int num){
 		return (CFBox) this.getComponent(num);
-	}
+	}*/
 	public CFBox[] getComponents(){
 		CFBox[] boxArray=new CFBox[getComponentCount()];
 		for(int i=0; i<getComponentCount(); i++){
-			boxArray[i]=getComponent(i);
+			boxArray[i]=(CFBox) getComponent(i);
 		}
 		return boxArray;
 	}
