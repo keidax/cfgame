@@ -14,13 +14,11 @@ public class CFBox extends Canvas {
         this.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent arg0) {
                 try {
-                    ((CFColumn) getParent()).addPiece();
-                    
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-                
+					((CFColumn) getParent()).addPiece();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
             public void mousePressed(MouseEvent arg0) {}
             public void mouseReleased(MouseEvent arg0) {}

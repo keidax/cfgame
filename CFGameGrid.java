@@ -50,9 +50,9 @@ public class CFGameGrid extends Frame implements WindowListener {
         {
             System.out.println(players[VictorNum()].getName()+" WINS!!!");
         }
-        for(int i=0; i<columns.size(); i++) 
+        for(int i=0; i<this.getComponentCount(); i++) 
         {   
-            columns.get(i).endGame();
+            ((CFColumn) this.getComponent(i)).endGame();
         }
     }
     @SuppressWarnings("unused")
@@ -75,9 +75,9 @@ public class CFGameGrid extends Frame implements WindowListener {
         players[1].setColor(Color.ORANGE);
     }
     public void setCurrentPlayer(Gamer player){
-        for(CFColumn col:columns)
+        for(int i=0; i<this.getComponentCount(); i++)
         {
-            col.setCurrentPlayer(player);
+            ((CFColumn)this.getComponent(i)).setCurrentPlayer(player);
         }
     }
     
@@ -260,15 +260,11 @@ public class CFGameGrid extends Frame implements WindowListener {
         return -1;
     }
     public boolean isGridFull(){
-        //TODO implement this to actually check grid and return a value
-        for(int c=0; c<columns.size(); c++)
+        for(CFColumn column:(CFColumn[])this.getComponents())
         {
-            for(int r=0; r<((CFColumn)columns.get(0)).height(); r++)
-            {   if(((CFBox)((CFColumn)columns.get(c)).get(r)).isEmpty())
-                {   
-                    return false;
-                }
-            }
+        	if(!column.isFull()){
+        		return false;
+        	}
         }
         return true;
     }

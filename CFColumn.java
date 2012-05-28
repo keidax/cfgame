@@ -105,4 +105,13 @@ public class CFColumn extends Panel implements Runnable{
     {   return column.get(slot);   }
     public void endGame()
     {   gameOver=true;  }
+    public boolean isFull(){
+    	for(CFBox box:(CFBox[])this.getComponents()){
+    		if(box.isEmpty())
+            {   
+                return false;
+            }
+    	}
+    	return true;
+    }
 }
