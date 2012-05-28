@@ -1,11 +1,9 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
-import java.util.List;
 
 @SuppressWarnings("serial")
-public class CFColumn extends Panel implements Runnable{
-    private ArrayList<CFBox> column=new ArrayList<CFBox>(); private boolean gameOver=false;
+public class CFColumn extends Panel implements MouseListener{
+    private boolean gameOver=false;
     Color backgroundColor;
     Gamer cPlayer;
     public CFColumn(int numRows, Color bc) {
@@ -14,46 +12,33 @@ public class CFColumn extends Panel implements Runnable{
         setLayout(new GridLayout(numRows, 1));
         for(int i=0; i<numRows;i++){
         	CFBox tempBox=new CFBox(backgroundColor);
-        	column.add(tempBox);
         	this.add(tempBox);
         }
-        this.addMouseListener(new MouseListener() {
-            public void mouseClicked(MouseEvent arg0) {}
-            public void mousePressed(MouseEvent arg0) {}
-            public void mouseReleased(MouseEvent arg0) {}
-            public void mouseEntered(MouseEvent arg0) {
-                Color notificationColor=getBackground().darker();
-                setBackground(notificationColor);
-            }
-            public void mouseExited(MouseEvent arg0) {
-                Color restoreColor=getParent().getBackground();
-                setBackground(restoreColor);
-            }
-        });
+        addMouseListener(this);
     }
     public void setBackground(Color c){
         super.setBackground(c);
-        for(CFBox box:column){
-            box.setBackground(c);
+        for(int i=0; i<this.getComponentCount(); i++){
+            this.getComponent(i).setBackground(c);
         }
     }
     public void setCurrentPlayer(Gamer player){
-        for(CFBox box:column){
-            box.setCurrentPlayer(player);
+    	for(int i=0; i<this.getComponentCount(); i++){
+    		((CFBox) this.getComponent(i)).setCurrentPlayer(player);
         }
         cPlayer=player; 
     }
     public void addPiece()
     throws InterruptedException
     {
-        for(int i=0; i<column.size(); i++)
+        for(int i=0; i<this.getComponentCount(); i++)
         {
-            CFBox box=column.get(i);
+            CFBox box=(CFBox) this.getComponent(i);
             if (gameOver)
             {
                 continue;
             }
-            else if(i==column.size()-1)
+            else if(i==getComponentCount()-1)
             {   //box is at bottom of column- piece rests here.
                 box.addPiece(); box.setOwner(box.getCurrentPlayer());
                 ((CFGameGrid)getParent()).endCurrentRound(); break;
@@ -62,7 +47,7 @@ public class CFColumn extends Panel implements Runnable{
             {
                 continue;
             }
-            else if(column.get(i+1).isEmpty()){//box below current box is empty
+            else if(((CFBox) getComponent(i+1)).isEmpty()){//box below current box is empty
                 box.addPiece();
                 Thread.sleep(50);
                 box.returnToEmpty();
@@ -97,13 +82,9 @@ public class CFColumn extends Panel implements Runnable{
         }*/
         //lastBox.setOwner(cPlayer); 
     }
-    public void run() {
-        // TODO Auto-generated method stub
-        
-    }
-    public int height() {   return column.size();   }
+    public int height() {   return getComponentCount();   }
     public CFBox get (int slot)
-    {   return column.get(slot);   }
+    {   return (CFBox) getComponent(slot);   }
     public void endGame()
     {   gameOver=true;  }
     public boolean isFull(){
@@ -115,4 +96,15 @@ public class CFColumn extends Panel implements Runnable{
     	}
     	return true;
     }
+	public void mouseClicked(MouseEvent arg0) {}
+	public void mousePressed(MouseEvent arg0) {}
+	public void mouseReleased(MouseEvent arg0) {}
+	public void mouseExited(MouseEvent arg0) {
+		Color restoreColor=getParent().getBackground();
+        setBackground(restoreColor);
+	}
+	public void mouseEntered(MouseEvent arg0) {
+		Color notificationColor=getBackground().darker();
+        setBackground(notificationColor);
+	}
 }
