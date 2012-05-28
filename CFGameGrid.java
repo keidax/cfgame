@@ -57,32 +57,12 @@ public class CFGameGrid extends Frame implements WindowListener {
             ((CFColumn) getComponent(i)).endGame();
         }
     }
-    private void getPlayerInfo(){
-    	/*
-    	String nom;
-        Scanner kbReader=new Scanner(System.in);
-        for(int p=1; (p-1)<players.length; p++)
-        {
-            System.out.println("Please enter Player #"+p+":");
-            System.out.print("Name:\t"); nom=kbReader.nextLine();
-            //perhaps have a method by which players choose their colors. 
-            players[p-1]=new Gamer(nom);
-        }
-        */
-    	
+    private void getPlayerInfo()
+    {
         CFPopup inputWindow = new CFPopup(this, true);
-        inputWindow.setLayout(new GridLayout(4,1));
-        inputWindow.setBackground(Color.LIGHT_GRAY);
-        inputWindow.add(new Label("Player 1 Name:"));
-        TextField field1=new TextField("",30);
-        inputWindow.add(field1);
-        inputWindow.add(new Label("Player 2 Name:"));
-        TextField field2=new TextField("",30);
-        inputWindow.add(field2);
-        
         inputWindow.setVisible(true);
-        players[0]=new Gamer(field1.getText());
-        players[1]=new Gamer(field2.getText());
+        players[0]=new Gamer(inputWindow.getPlayer1Name());
+        players[1]=new Gamer(inputWindow.getPlayer2Name());
         players[0].setColor(Color.CYAN);
         players[1].setColor(Color.ORANGE);
         System.out.println("Player colors set");
