@@ -1,6 +1,10 @@
+import java.awt.BorderLayout;
+import java.awt.Button;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Frame;
 import java.awt.GridLayout;
+import java.awt.Panel;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
@@ -12,15 +16,25 @@ public class CFGameGrid extends Frame implements WindowListener {
     boolean currentTurnOver=false;
     private Gamer[] players=new Gamer[2];
     Color backgroundColor=Color.BLUE;
+    Panel grid=new Panel();
     public CFGameGrid(String title, int numRows, int numColumns) {
         super(title);
-        setBackground(backgroundColor);
-        setLayout(new GridLayout(1,numColumns,0,0));
+        //setBackground(backgroundColor);
+        grid.setLayout(new GridLayout(1,numColumns,0,0));
+        
+        
+        this.setLayout(new BorderLayout());
+        this.add(grid);
+        grid.setVisible(true);
         for(int i=0; i<numColumns;i++){
         	CFColumn tempColumn=new CFColumn(numRows, backgroundColor);
             columns.add(tempColumn);
-            this.add(tempColumn);
+            grid.add(tempColumn);
+            tempColumn.setVisible(true);
         }
+        
+        this.add(new Button("Help!"), BorderLayout.SOUTH);
+        grid.setBackground(Color.GRAY);
         addWindowListener(this);
         setSize(400, 400);
         setVisible(true);
@@ -37,9 +51,9 @@ public class CFGameGrid extends Frame implements WindowListener {
             changePlayerTo(players[p]);
             System.out.println("It is now "+players[p].getName()+"'s turn:");
             while(!isRoundOver()){
-                try {
-                    wait();
-                } catch (InterruptedException e2) {}
+                //try {
+                    //wait();
+                //} catch (InterruptedException e2) {}
 
             }
             System.out.println(players[p].getName()+"'s turn is over.");
@@ -71,9 +85,9 @@ public class CFGameGrid extends Frame implements WindowListener {
         System.out.println("Player colors set");
     }
     public void setCurrentPlayer(Gamer player){
-        for(int i=0; i<getComponentCount(); i++)
+        for(int i=0; i<columns.size(); i++)
         {
-            ((CFColumn) getComponent(i)).setCurrentPlayer(player);
+            columns.get(i).setCurrentPlayer(player);
         }
     }
     
@@ -256,7 +270,7 @@ public class CFGameGrid extends Frame implements WindowListener {
         return -1;
     }
     public boolean isGridFull(){
-        for(CFColumn column:getComponents())
+        for(CFColumn column:columns)
         {
         	if(!column.isFull()){
         		System.out.println("Grid not full.");
@@ -276,16 +290,6 @@ public class CFGameGrid extends Frame implements WindowListener {
         currentTurnOver=true;
         notifyAll();
     }
-    /*public CFColumn getComponent(int num){
-		return (CFColumn) this.getComponent(num);
-	}*/
-    public CFColumn[] getComponents(){
-		CFColumn[] colArray=new CFColumn[getComponentCount()];
-		for(int i=0; i<getComponentCount(); i++){
-			colArray[i]=(CFColumn)getComponent(i);
-		}
-		return colArray;
-	}
     public void windowClosing(WindowEvent e) {
         setVisible(false);
         dispose();

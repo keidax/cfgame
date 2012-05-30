@@ -16,6 +16,7 @@ public class CFColumn extends Panel implements MouseListener{
         for(int i=0; i<numRows;i++){
         	CFBox tempBox=new CFBox(backgroundColor);
         	this.add(tempBox);
+        	tempBox.setVisible(true);
         }
         addMouseListener(this);
     }
@@ -31,7 +32,7 @@ public class CFColumn extends Panel implements MouseListener{
         }
         cPlayer=player; 
     }
-    public void addPiece()
+    public synchronized void addPiece()
     throws InterruptedException
     {
         for(int i=0; i<this.getComponentCount(); i++)
@@ -44,7 +45,10 @@ public class CFColumn extends Panel implements MouseListener{
             else if(i==getComponentCount()-1)
             {   //box is at bottom of column- piece rests here.
                 box.addPiece(); box.setOwner(box.getCurrentPlayer());
-                ((CFGameGrid)getParent()).endCurrentRound(); break;
+                //((CFGameGrid)getParent()).endCurrentRound(); 
+                notifyAll();
+                getParent().notifyAll();
+                break;
             }
             else if(i==0 && !box.isEmpty()) //column is already full
             {
@@ -59,7 +63,9 @@ public class CFColumn extends Panel implements MouseListener{
             else
             {   //box below current box is NOT empty- piece rests here.
                 box.addPiece(); box.setOwner(box.getCurrentPlayer());
-                ((CFGameGrid) getParent()).endCurrentRound(); break;
+                //((CFGameGrid) getParent()).endCurrentRound(); 
+                notifyAll();
+                break;
             }
         }
     }
@@ -84,7 +90,7 @@ public class CFColumn extends Panel implements MouseListener{
 		Color restoreColor=getParent().getBackground();
         setBackground(restoreColor);
 	}
-	public void mouseEntered(MouseEvent arg0) {
+	public synchronized void mouseEntered(MouseEvent arg0) {
 		Color notificationColor=getBackground().darker();
         setBackground(notificationColor);
 	}

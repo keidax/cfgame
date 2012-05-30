@@ -5,7 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 @SuppressWarnings("serial")
-public class CFBox extends Canvas {
+public class CFBox extends Canvas implements MouseListener{
     private Gamer currentPlayer;
     private boolean isOccupied;
     private Gamer owner;
@@ -14,24 +14,7 @@ public class CFBox extends Canvas {
         super();
         backgroundColor=bc;
         isOccupied=false;
-        this.addMouseListener(new MouseListener() {
-            public void mouseClicked(MouseEvent arg0) {
-                try {
-					((CFColumn) getParent()).addPiece();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-            }
-            public void mousePressed(MouseEvent arg0) {}
-            public void mouseReleased(MouseEvent arg0) {}
-            public void mouseEntered(MouseEvent arg0) {
-                getParent().setBackground(backgroundColor.darker());
-            }
-            public void mouseExited(MouseEvent arg0) {
-                getParent().setBackground(backgroundColor.brighter());
-            }
-        });
+        this.addMouseListener(this);
     }
 
     public void paint(Graphics g) {
@@ -75,6 +58,34 @@ public class CFBox extends Canvas {
     public Gamer getCurrentPlayer()  {   return currentPlayer;   }
     
     public Gamer getOwner() {   return owner;   }
-    
+    public void mouseClicked(MouseEvent arg0) {
+    	getParent().notify();
+    	System.out.println("Parent notified");
+        try {
+			((CFColumn) getParent()).addPiece();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    public void mousePressed(MouseEvent arg0) {}
+    public void mouseReleased(MouseEvent arg0) {}
+    public void mouseEntered(MouseEvent arg0) {
+    	System.out.print("mouse entered: ");
+        getParent().setBackground(backgroundColor.darker());
+        synchronized(getParent()){
+        	try {
+        		System.out.println("waiting...");
+				getParent().wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+        }
+    }
+    public void mouseExited(MouseEvent arg0) {
+    	getParent().notify();
+    	System.out.println("mouse exited: parent column notified");
+        getParent().setBackground(backgroundColor.brighter());
+    }
     
 }
