@@ -17,8 +17,14 @@ public class CFGameGrid extends Frame implements WindowListener {
     private Gamer[] players=new Gamer[2];
     Color backgroundColor=Color.BLUE;
     Panel grid=new Panel();
+    CFLock lock = new CFLock();
     public CFGameGrid(String title, int numRows, int numColumns) {
         super(title);
+    	try {
+			lock.lock();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
         //setBackground(backgroundColor);
         grid.setLayout(new GridLayout(1,numColumns,0,0));
         
@@ -27,7 +33,7 @@ public class CFGameGrid extends Frame implements WindowListener {
         this.add(grid);
         grid.setVisible(true);
         for(int i=0; i<numColumns;i++){
-        	CFColumn tempColumn=new CFColumn(numRows, backgroundColor);
+        	CFColumn tempColumn=new CFColumn(numRows, backgroundColor, lock);
             columns.add(tempColumn);
             grid.add(tempColumn);
             tempColumn.setVisible(true);
@@ -39,6 +45,7 @@ public class CFGameGrid extends Frame implements WindowListener {
         setSize(400, 400);
         setVisible(true);
         getPlayerInfo();
+        lock.unlock();
         game();
     }
     
@@ -51,9 +58,15 @@ public class CFGameGrid extends Frame implements WindowListener {
             changePlayerTo(players[p]);
             System.out.println("It is now "+players[p].getName()+"'s turn:");
             while(!isRoundOver()){
-                //try {
-                    //wait();
-                //} catch (InterruptedException e2) {}
+                try {
+                	//System.out.println("setting game lock...");
+					lock.lock();
+					//System.out.println("game lock set");
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+                lock.unlock();
+                //System.out.println("game lock opened");
 
             }
             System.out.println(players[p].getName()+"'s turn is over.");

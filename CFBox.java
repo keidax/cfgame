@@ -10,8 +10,10 @@ public class CFBox extends Canvas implements MouseListener{
     private boolean isOccupied;
     private Gamer owner;
     Color backgroundColor;
-    public CFBox(Color bc) {
+    CFLock lock;
+    public CFBox(Color bc, CFLock l) {
         super();
+        lock =l;
         backgroundColor=bc;
         isOccupied=false;
         this.addMouseListener(this);
@@ -59,33 +61,35 @@ public class CFBox extends Canvas implements MouseListener{
     
     public Gamer getOwner() {   return owner;   }
     public void mouseClicked(MouseEvent arg0) {
-    	getParent().notify();
-    	System.out.println("Parent notified");
+    	System.out.println("mouse clicked");
         try {
+        	System.out.println("unlocking box...");
+        	lock.unlock();
+        	System.out.println("box unlocked");
 			((CFColumn) getParent()).addPiece();
+			System.out.println("relocking box...");
+			lock.lock();
+			System.out.println("box relocked");
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
     public void mousePressed(MouseEvent arg0) {}
     public void mouseReleased(MouseEvent arg0) {}
     public void mouseEntered(MouseEvent arg0) {
-    	System.out.print("mouse entered: ");
+    	try {
+			lock.lock();
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
+    	System.out.println("mouse entered; locked");
         getParent().setBackground(backgroundColor.darker());
-        synchronized(getParent()){
-        	try {
-        		System.out.println("waiting...");
-				getParent().wait();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-        }
+        System.out.println("waiting...");
     }
     public void mouseExited(MouseEvent arg0) {
-    	getParent().notify();
-    	System.out.println("mouse exited: parent column notified");
+    	System.out.println("mouse exited; unlocked");
         getParent().setBackground(backgroundColor.brighter());
+        lock.unlock();
     }
     
 }
