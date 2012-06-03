@@ -34,10 +34,9 @@ public class CFColumn extends Panel implements MouseListener{
         }
         cPlayer=player; 
     }
-    public synchronized void addPiece()
+    public synchronized boolean addPiece()
     throws InterruptedException
     {
-    	System.out.println("locking column...");
     	lock.lock();
     	System.out.println("column locked");
         for(int i=0; i<this.getComponentCount(); i++)
@@ -53,14 +52,15 @@ public class CFColumn extends Panel implements MouseListener{
                 box.setOwner(box.getCurrentPlayer());
                 System.out.println("ending current round...");
                 ((CFGameGrid) getParent().getParent()).endCurrentRound();
-                System.out.println("unlocking column...");
                 lock.unlock();
                 System.out.println("column unlocked");
-                break;
+                return true;
             }
             else if(i==0 && !box.isEmpty()) //column is already full
             {
-                continue;
+            	lock.unlock();
+                System.out.println("column unlocked");
+                return false;
             }
             else if(((CFBox) getComponent(i+1)).isEmpty()){//box below current box is empty
                 box.addPiece();
@@ -74,14 +74,14 @@ public class CFColumn extends Panel implements MouseListener{
                 box.setOwner(box.getCurrentPlayer());
                 System.out.println("ending current round...");
                 ((CFGameGrid) getParent().getParent()).endCurrentRound();
-                System.out.println("unlocking column...");
                 lock.unlock();
                 System.out.println("column unlocked");
-                break;
+                return true;
             }
         }
         lock.unlock();
         System.out.println("column unlocked");
+        return false;
     }
     public int height() {   return getComponentCount();   }
     public CFBox get (int slot)
@@ -100,15 +100,9 @@ public class CFColumn extends Panel implements MouseListener{
 	public void mouseClicked(MouseEvent arg0) {}
 	public void mousePressed(MouseEvent arg0) {}
 	public void mouseReleased(MouseEvent arg0) {}
-	public void mouseExited(MouseEvent arg0) {
-    	System.out.println("mouse exited column");
-		Color restoreColor=getParent().getBackground();
-        setBackground(restoreColor);
+	public void mouseExited(MouseEvent arg0) {;
 	}
 	public synchronized void mouseEntered(MouseEvent arg0) {
-		System.out.println("mouse entered column");
-		Color notificationColor=getBackground().darker();
-        setBackground(notificationColor);
 	}
 	/*public CFBox getComponent(int num){
 		return (CFBox) this.getComponent(num);

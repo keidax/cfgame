@@ -65,11 +65,13 @@ public class CFBox extends Canvas implements MouseListener{
         try {
         	System.out.println("unlocking box...");
         	lock.unlock();
-        	System.out.println("box unlocked");
-			((CFColumn) getParent()).addPiece();
-			System.out.println("relocking box...");
-			lock.lock();
-			System.out.println("box relocked");
+			if(((CFColumn) getParent()).addPiece()){
+				System.out.println("piece added");
+			}
+			else{
+				lock.lock();
+				System.out.println("box relocked");
+			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -77,18 +79,13 @@ public class CFBox extends Canvas implements MouseListener{
     public void mousePressed(MouseEvent arg0) {}
     public void mouseReleased(MouseEvent arg0) {}
     public void mouseEntered(MouseEvent arg0) {
-    	try {
-			lock.lock();
-		} catch (InterruptedException e1) {
-			e1.printStackTrace();
-		}
-    	System.out.println("mouse entered; locked");
-        getParent().setBackground(backgroundColor.darker());
-        System.out.println("waiting...");
+		lock.lock();
+    	System.out.println("mouse entered; locked and waiting...");
+        getParent().setBackground(Color.GRAY);
     }
     public void mouseExited(MouseEvent arg0) {
     	System.out.println("mouse exited; unlocked");
-        getParent().setBackground(backgroundColor.brighter());
+        getParent().setBackground(backgroundColor);
         lock.unlock();
     }
     
