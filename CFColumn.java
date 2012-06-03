@@ -51,6 +51,7 @@ public class CFColumn extends Panel implements MouseListener{
             {   //box is at bottom of column- piece rests here.
                 box.addPiece();
                 box.setOwner(box.getCurrentPlayer());
+                System.out.println("ending current round...");
                 ((CFGameGrid) getParent().getParent()).endCurrentRound();
                 System.out.println("unlocking column...");
                 lock.unlock();
@@ -71,6 +72,7 @@ public class CFColumn extends Panel implements MouseListener{
             {   //box below current box is NOT empty- piece rests here.
                 box.addPiece();
                 box.setOwner(box.getCurrentPlayer());
+                System.out.println("ending current round...");
                 ((CFGameGrid) getParent().getParent()).endCurrentRound();
                 System.out.println("unlocking column...");
                 lock.unlock();

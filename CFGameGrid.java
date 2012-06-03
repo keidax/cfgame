@@ -298,10 +298,9 @@ public class CFGameGrid extends Frame implements WindowListener {
         currentPlayer=player;
         setCurrentPlayer(currentPlayer);
     }
-    public synchronized void endCurrentRound(){
+    public void endCurrentRound(){
         System.out.println("gamegrid turn ended");
         currentTurnOver=true;
-        notifyAll();
     }
     public void windowClosing(WindowEvent e) {
         setVisible(false);
