@@ -10,7 +10,7 @@ import java.awt.event.MouseListener;
 
 @SuppressWarnings("serial")
 public class CFPopup extends Dialog{
-	private TextField field1=null, field2=null;
+	private TextField field1=null, field2=null; int width=100, height=150;
 	public CFPopup(Frame f, boolean modal){
 		super(f, modal);
 		setResizable(false);
@@ -29,8 +29,11 @@ public class CFPopup extends Dialog{
 			Button closeButton=new Button("Enter");
 			closeButton.addMouseListener(new MouseListener(){
 				public void mouseClicked(MouseEvent arg0) {
-					setVisible(false);
-			        dispose();
+					if(!(field1.getText().isEmpty() && field2.getText().isEmpty()) 
+							&& !(field1.getText().equalsIgnoreCase(field2.getText()))){
+						setVisible(false);
+			        	dispose();
+					}
 				}
 				public void mouseEntered(MouseEvent arg0) {}
 				public void mouseExited(MouseEvent arg0) {}
@@ -39,6 +42,7 @@ public class CFPopup extends Dialog{
 			});
 			this.add(closeButton);
 			this.setBounds(30, 30, 100, 150);
+			//this.setBounds(f.getX()+f.getWidth()/2-width/2, f.getY()+f.getHeight()/2-height/2, width, height);
 			((GridLayout) getLayout()).setVgap(5);
 			super.setVisible(b);
 		}

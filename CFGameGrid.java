@@ -18,6 +18,9 @@ public class CFGameGrid extends Frame implements WindowListener {
     Panel grid=new Panel();
     CFLock lock = new CFLock();
     Label notifier=new Label("");
+    
+  
+       
     public CFGameGrid(String title, int numRows, int numColumns) {
         super(title);
 		lock.lock();
@@ -36,7 +39,8 @@ public class CFGameGrid extends Frame implements WindowListener {
         this.add(notifier, BorderLayout.SOUTH);
         grid.setBackground(backgroundColor);
         addWindowListener(this);
-        setSize(400, 400);
+        //setSize(400, 400);
+        setBounds(200, 200, 400, 400);
         setVisible(true);
         getPlayerInfo();
         lock.unlock();
@@ -51,6 +55,7 @@ public class CFGameGrid extends Frame implements WindowListener {
         {
             changePlayerTo(players[p]);
             System.out.println("It is now "+players[p].getName()+"'s turn:");
+            notifier.setForeground(players[p].getColor());
             notifier.setText("It is now "+players[p].getName()+"'s turn.");
             //int count=0;
             while(!isRoundOver()){
@@ -83,6 +88,7 @@ public class CFGameGrid extends Frame implements WindowListener {
     {
         CFPopup inputWindow = new CFPopup(this, true);
         inputWindow.setVisible(true);
+        System.out.println("resumed");
         players[0]=new Gamer(inputWindow.getPlayer1Name());
         players[1]=new Gamer(inputWindow.getPlayer2Name());
         players[0].setColor(Color.CYAN);
